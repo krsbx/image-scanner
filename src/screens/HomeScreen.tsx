@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { connect, ConnectedProps } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { ScannerView as RectScannerView } from 'react-native-rectangle-scanner';
 import { AppState } from '../store';
 import { setScanner as _setScanner } from '../store/actions/scanner';
@@ -16,6 +17,7 @@ import { getDevice } from '../store/selectors/device';
 import useSnapAnimation from '../hooks/useSnapAnimation';
 import { DIMENSSIONS } from '../utils/constant';
 import ScannerView from '../components/View/Scanner/ScannerView';
+import { MainNavigationScreenNavigation } from '../types/Navigation';
 
 const HomeScreen: React.FC<Props> = ({
   scanner,
@@ -31,8 +33,10 @@ const HomeScreen: React.FC<Props> = ({
     isProcessingImage,
     detectedRectangle,
     isOnScannerView,
+    image,
   } = scanner;
 
+  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
   const { flashOpacity, startSnapAnimation } = useSnapAnimation();
 
   const cameraRef = createRef<RectScannerView>();
@@ -125,6 +129,12 @@ const HomeScreen: React.FC<Props> = ({
     if (cameraIsOn === false && isOnScannerView) return turnOffCamera(true);
     if (cameraIsOn === undefined) return turnOnCamera();
   }, [didLoadInitialLayout]);
+
+  useEffect(() => {
+    if (!image) return;
+
+    navigation.replace('Crop');
+  }, [image]);
 
   return (
     <View style={styles.container} onLayout={onLayout}>

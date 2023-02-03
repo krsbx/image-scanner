@@ -1,29 +1,74 @@
+import _ from 'lodash';
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import DocumentPicker from 'react-native-document-picker';
+import PdfThumbnail from 'react-native-pdf-thumbnail';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect, ConnectedProps } from 'react-redux';
-import { AppState } from '../../store';
 import { setScanner as _setScanner } from '../../store/actions/scanner';
 import { controlStyle } from '../../styles';
+import { MainNavigationScreenNavigation } from '../../types/Navigation';
+import { DEFAULT_RECTANGLE } from '../../utils/constant';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
+  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
+
   const onPress = async () => {
-    const { uri } = await DocumentPicker.pickSingle({
-      type: [DocumentPicker.types.pdf, 'image/jpg', 'image/jpeg'],
+    setScanner({
+      isOnScannerView: false,
     });
 
-    const ext = uri.split('.').pop();
+    const { fileCopyUri: filePath, name } = await DocumentPicker.pickSingle({
+      type: [DocumentPicker.types.pdf, 'image/jpg', 'image/jpeg'],
+      copyTo: 'cachesDirectory',
+    });
+
+    if (!filePath) return;
+
+    const ext = name?.split('.').pop();
 
     switch (ext) {
       case 'jpeg':
-      case 'jpg':
-        break;
+      case 'jpg': {
+        setScanner({
+          image: {
+            initialImage: filePath,
+            croppedImage: '',
+          },
+        });
 
-      case 'pdf':
+        Image.getSize(filePath, (width, height) => {
+          setScanner({
+            detectedRectangle: DEFAULT_RECTANGLE(width, height),
+          });
+        });
+
+        navigation.replace('Crop');
         break;
+      }
+
+      case 'pdf': {
+        const { height, uri, width } = await PdfThumbnail.generate(
+          filePath,
+          0,
+          90
+        );
+
+        setScanner({
+          image: {
+            initialImage: uri,
+            croppedImage: '',
+          },
+          detectedRectangle: DEFAULT_RECTANGLE(width, height),
+        });
+
+        navigation.replace('Crop');
+        break;
+      }
 
       default:
+        navigation.replace('Home');
         break;
     }
   };
@@ -59,9 +104,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({});
-
-const connector = connect(mapStateToProps, {
+const connector = connect(null, {
   setScanner: _setScanner,
 });
 

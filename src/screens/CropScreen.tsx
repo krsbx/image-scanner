@@ -99,36 +99,36 @@ const CropScreen: React.FC<Props> = ({
         flex: 1,
       }}
     >
-      {!croppedImage ? (
-        <CustomCrop
-          updateImage={onUpdateImage}
-          rectangleCoordinates={rectangleCoordinates}
-          initialImage={initialImage}
-          height={height}
-          width={width}
-          overlayStrokeWidth={1}
-          overlayColor="rgba(18,190,210, 0.4)"
-          overlayStrokeColor="rgba(20,180,255, 1)"
-          handlerColor="rgba(20,150,160, 1)"
-          handlerRoundSize={15}
-          handlerRoundOuterSize={0.5}
-          topOffset={10}
-          bottomOffset={10}
-          ref={
-            cropRef as unknown as React.RefObject<Component<CustomCropProps>>
-          }
-        />
-      ) : (
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        {!croppedImage ? (
+          <CustomCrop
+            updateImage={onUpdateImage}
+            rectangleCoordinates={rectangleCoordinates}
+            initialImage={initialImage}
+            height={height}
+            width={width}
+            overlayStrokeWidth={1}
+            overlayColor="rgba(18,190,210, 0.4)"
+            overlayStrokeColor="rgba(20,180,255, 1)"
+            handlerColor="rgba(20,150,160, 1)"
+            handlerRoundSize={15}
+            handlerRoundOuterSize={0.5}
+            topOffset={10}
+            bottomOffset={10}
+            ref={
+              cropRef as unknown as React.RefObject<Component<CustomCropProps>>
+            }
+          />
+        ) : (
           <Image
-            style={[styles.croppedImage]}
+            style={[
+              styles.croppedImage,
+              height < width ? styles.croppedImageRot : {},
+            ]}
             source={{ uri: `data:image/png;base64,${croppedImage}` }}
           />
-        </View>
-      )}
-
+        )}
+      </View>
       <View style={globalStyle.buttonBottomContainer}>
         <View style={controlStyle.buttonGroup}>
           <TouchableOpacity
@@ -201,7 +201,9 @@ const styles = StyleSheet.create({
     height: '40%',
     width: '100%',
     resizeMode: 'contain',
-    transform: [{ rotate: '-90deg' }],
+  },
+  croppedImageRot: {
+    transform: [{ rotateZ: '180deg' }, { rotateY: '180deg' }],
   },
   button: {
     backgroundColor: '#fefefe',

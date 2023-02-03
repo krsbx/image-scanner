@@ -17,6 +17,7 @@ export type ScannerReducer = {
 
   images: PictureCallbackProps[];
   detectedRectangles: DetectedRectangle[];
+  croppedImages: string[];
   selectedImage: number;
 };
 
@@ -27,12 +28,15 @@ export enum ScannerActionType {
   SET_SELECTED_IMAGE = 'scanner.selected-image.set',
 
   PUSH_IMAGE = 'scanner.image.push',
+  PUSH_CROPPED_IMAGE = 'scanner.cropped-image.push',
   PUSH_DETECTED_RECTANGLE = 'scanner.detected-rectangle.push',
 
   UPDATE_IMAGE = 'scanner.image.update',
+  UPDATE_CROPPED_IMAGE = 'scanner.cropped-image.update',
   UPDATE_DETECTED_RECTANGLE = 'scanner.detected-rectangle.update',
 
   DELETE_IMAGE = 'scanner.image.delete',
+  DELETE_CROPPED_RECTANGLE = 'scanner.cropped-image.delete',
   DELETE_DETECTED_RECTANGLE = 'scanner.detected-rectangle.delete',
 }
 
@@ -61,6 +65,11 @@ export type PushImage = {
   payload: PictureCallbackProps;
 };
 
+export type PushCroppedImage = {
+  type: ScannerActionType.PUSH_CROPPED_IMAGE;
+  payload: string;
+};
+
 export type PushDetectedRectangle = {
   type: ScannerActionType.PUSH_DETECTED_RECTANGLE;
   payload: DetectedRectangle;
@@ -76,6 +85,14 @@ export type UpdateImage = {
   };
 };
 
+export type UpdateCroppedImage = {
+  type: ScannerActionType.UPDATE_CROPPED_IMAGE;
+  payload: {
+    index: number;
+    data: string;
+  };
+};
+
 export type UpdateDetectedRectangle = {
   type: ScannerActionType.UPDATE_DETECTED_RECTANGLE;
   payload: {
@@ -88,6 +105,11 @@ export type UpdateDetectedRectangle = {
 
 export type DeleteImage = {
   type: ScannerActionType.DELETE_IMAGE;
+  payload: number;
+};
+
+export type DeleteCroppedImage = {
+  type: ScannerActionType.DELETE_CROPPED_RECTANGLE;
   payload: number;
 };
 

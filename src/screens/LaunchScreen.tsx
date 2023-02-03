@@ -8,7 +8,8 @@ import { MainNavigationScreenNavigation } from '../types/Navigation';
 import { DIMENSSIONS } from '../utils/constant';
 
 const LaunchScreen: React.FC = () => {
-  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'LaunchScreen'>>();
   const logoOpacity = useRef(new Animated.Value(0));
   const textOpacity = useRef(new Animated.Value(0));
   const transformDown = useRef(new Animated.Value(0));
@@ -20,7 +21,7 @@ const LaunchScreen: React.FC = () => {
 
     switch (status) {
       case 'granted': {
-        navigation.replace('Home');
+        navigation.replace('HomeScreen');
         return;
       }
 
@@ -84,7 +85,7 @@ const LaunchScreen: React.FC = () => {
 
     switch (status) {
       case 'granted': {
-        setTimeout(() => navigation.replace('Home'), 2000);
+        setTimeout(() => navigation.replace('HomeScreen'), 2000);
         return;
       }
 

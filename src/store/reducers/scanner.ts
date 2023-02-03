@@ -3,13 +3,16 @@ import {
   ScannerActionType as ActionType,
   ScannerReducer,
   DeleteDetectedRectangle,
+  DeleteCroppedImage,
   DeleteImage,
   DeleteScanner,
   PushDetectedRectangle,
+  PushCroppedImage,
   PushImage,
   SetScanner,
   SetSelectedImage,
   UpdateDetectedRectangle,
+  UpdateCroppedImage,
   UpdateImage,
 } from '../actions-types/scanner';
 
@@ -20,6 +23,7 @@ const initialState: ScannerReducer = {
   image: undefined,
 
   detectedRectangles: [],
+  croppedImages: [],
   images: [],
 
   didLoadInitialLayout: false,
@@ -36,13 +40,16 @@ const reducer = (
   state = _.cloneDeep(initialState),
   actions:
     | DeleteDetectedRectangle
+    | DeleteCroppedImage
     | DeleteImage
     | DeleteScanner
     | PushDetectedRectangle
+    | PushCroppedImage
     | PushImage
     | SetScanner
     | SetSelectedImage
     | UpdateDetectedRectangle
+    | UpdateCroppedImage
     | UpdateImage
 ): ScannerReducer => {
   switch (actions.type) {
@@ -82,6 +89,12 @@ const reducer = (
       return state;
     }
 
+    case ActionType.PUSH_CROPPED_IMAGE: {
+      state.croppedImages.push(actions.payload);
+
+      return state;
+    }
+
     case ActionType.PUSH_DETECTED_RECTANGLE: {
       state.detectedRectangles.push(actions.payload);
 
@@ -98,6 +111,14 @@ const reducer = (
       return state;
     }
 
+    case ActionType.UPDATE_CROPPED_IMAGE: {
+      if (!state.croppedImages[actions.payload.index]) return state;
+
+      state.croppedImages[actions.payload.index] = actions.payload.data;
+
+      return state;
+    }
+
     case ActionType.UPDATE_DETECTED_RECTANGLE: {
       if (!state.detectedRectangles[actions.payload.index]) return state;
 
@@ -110,6 +131,14 @@ const reducer = (
       if (!state.images[actions.payload]) return state;
 
       state.images.splice(actions.payload, 1);
+
+      return state;
+    }
+
+    case ActionType.DELETE_CROPPED_RECTANGLE: {
+      if (!state.croppedImages[actions.payload]) return state;
+
+      state.croppedImages.splice(actions.payload, 1);
 
       return state;
     }

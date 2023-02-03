@@ -30,6 +30,18 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
   },
+  mainContainer: {
+    backgroundColor: 'black',
+    flex: 1,
+  },
+  croppedImage: {
+    height: '40%',
+    width: '100%',
+    resizeMode: 'contain',
+  },
+  croppedImageRot: {
+    transform: [{ rotateZ: '180deg' }, { rotateY: '180deg' }],
+  },
 });
 
 export default styles;

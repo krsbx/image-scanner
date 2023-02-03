@@ -1,9 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
 export type MainNavigationParam = {
-  Launch: undefined;
-  Home: undefined;
-  Crop: undefined;
+  LaunchScreen: undefined;
+  HomeScreen: undefined;
+  CropScreen: undefined;
+  CollectionScreen: undefined;
 };
 
 export type MainNavigationScreenParam<T extends keyof MainNavigationParam> =

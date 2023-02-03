@@ -12,7 +12,8 @@ import { MainNavigationScreenNavigation } from '../../types/Navigation';
 import { DEFAULT_RECTANGLE } from '../../utils/constant';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
-  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'HomeScreen'>>();
 
   const onPress = async () => {
     setScanner({
@@ -44,7 +45,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
           });
         });
 
-        navigation.replace('Crop');
+        navigation.replace('CropScreen');
         break;
       }
 
@@ -63,12 +64,12 @@ const Document: React.FC<Props> = ({ setScanner }) => {
           detectedRectangle: DEFAULT_RECTANGLE(width, height),
         });
 
-        navigation.replace('Crop');
+        navigation.replace('CropScreen');
         break;
       }
 
       default:
-        navigation.replace('Home');
+        navigation.replace('HomeScreen');
         break;
     }
   };

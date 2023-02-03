@@ -5,9 +5,10 @@ import {
 
 export type ScannerReducer = {
   image: PictureCallbackProps | undefined;
+  detectedRectangle: DetectedRectangle | undefined;
+
   isFlashEnabled: boolean;
   didLoadInitialLayout: boolean;
-  detectedRectangle: DetectedRectangle | undefined;
   isMultiTasking: boolean;
   isLoadingCamera: boolean;
   isProcessingImage: boolean;

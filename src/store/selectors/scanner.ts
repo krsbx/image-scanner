@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { AppState } from '..';
 
 export const getScanner = (state: AppState) => state.scanner;
@@ -39,3 +40,31 @@ export const getCameraDisabledStatus = (state: AppState) => {
 
 export const getTotalImage = (state: AppState) =>
   getScanner(state).images.length;
+
+export const getCropState = (state: AppState) => {
+  const { image, detectedRectangle } = getScanner(state);
+
+  const defaultCoordinate = {
+    x: 0,
+    y: 0,
+  };
+
+  return {
+    image: {
+      croppedImage: image?.croppedImage ?? '',
+      initialImage: image?.initialImage ?? '',
+    },
+    detectedRectangle: {
+      bottomLeft:
+        detectedRectangle?.bottomLeft ?? _.cloneDeep(defaultCoordinate),
+      bottomRight:
+        detectedRectangle?.bottomRight ?? _.cloneDeep(defaultCoordinate),
+      topLeft: detectedRectangle?.topLeft ?? _.cloneDeep(defaultCoordinate),
+      topRight: detectedRectangle?.topRight ?? _.cloneDeep(defaultCoordinate),
+      dimensions: {
+        height: detectedRectangle?.dimensions?.height ?? 0,
+        width: detectedRectangle?.dimensions?.width ?? 0,
+      },
+    },
+  };
+};

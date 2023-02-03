@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { connect, ConnectedProps } from 'react-redux';
 import { ScannerView as RectScannerView } from 'react-native-rectangle-scanner';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,7 +15,6 @@ import { getScanner } from '../../../store/selectors/scanner';
 import useCameraMessage from '../../../hooks/useCameraMessage';
 import CameraView from './CameraView';
 import { controlStyle, globalStyle, overlayStyle } from '../../../styles';
-import { MainNavigationScreenNavigation } from '../../../types/Navigation';
 
 const ScannerView: React.FC<Props> = ({
   capture,
@@ -26,16 +24,12 @@ const ScannerView: React.FC<Props> = ({
   device,
   cameraIsOn,
 }) => {
-  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
-
   const cameraErorrMessage = useCameraMessage({
     initialized: device.initialized,
     isHasCamera: device.isHasCamera,
     isHasCameraAccess: device.isHasCameraAccess,
     isMultiTasking: scanner.isMultiTasking,
   });
-
-  if (scanner.image) navigation.push('Crop');
 
   if (scanner.isOnScannerView) {
     return (

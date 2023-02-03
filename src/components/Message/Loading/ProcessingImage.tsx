@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { overlayStyle } from '../../../styles';
 
-const ProcessingImage = () => {
+const ProcessingImage: React.FC = () => {
   return (
     <View style={overlayStyle.container}>
       <View style={overlayStyle.loadingContainer}>

@@ -1,21 +1,16 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../../store';
-import {
-  getCameraStatus,
-  getImageProcessStatus,
-} from '../../store/selectors/scanner';
+import { getScanner } from '../../store/selectors/scanner';
 import { overlayStyle } from '../../styles';
 import LoadingCamera from '../Message/Loading/LoadingCamera';
 import ProcessingImage from '../Message/Loading/ProcessingImage';
 import CameraControl from './CameraControl';
 
-const CameraOverlay: React.FC<Props> = ({
-  isLoadingCamera,
-  isProcessingImage,
-  capture,
-}) => {
+const CameraOverlay: React.FC<Props> = ({ capture, scanner }) => {
+  const { isLoadingCamera, isProcessingImage } = scanner;
+
   return (
     <React.Fragment>
       {!isLoadingCamera ? null : isProcessingImage ? (
@@ -23,16 +18,15 @@ const CameraOverlay: React.FC<Props> = ({
       ) : (
         <LoadingCamera />
       )}
-      <SafeAreaView style={overlayStyle.container}>
+      <View style={overlayStyle.container}>
         <CameraControl capture={capture} />
-      </SafeAreaView>
+      </View>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
-  isLoadingCamera: getCameraStatus(state),
-  isProcessingImage: getImageProcessStatus(state),
+  scanner: getScanner(state),
 });
 
 const connector = connect(mapStateToProps);

@@ -36,3 +36,6 @@ export const getCameraDisabledStatus = (state: AppState) => {
 
   return isTakingPicture || isProcessingImage;
 };
+
+export const getTotalImage = (state: AppState) =>
+  getScanner(state).images.length;

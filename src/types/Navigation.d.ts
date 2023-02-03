@@ -1,9 +1,15 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackScreenProps } from '@react-navigation/stack';
 
 export type MainNavigationParam = {
+  Launch: undefined;
   Home: undefined;
+  Crop: undefined;
 };
 
 export type MainNavigationScreenParam<
   T extends keyof MainNavigationScreenParam
-> = NativeStackScreenProps<MainNavigationParam, T>;
+> = StackScreenProps<MainNavigationParam, T>;
+
+export type MainNavigationScreenNavigation<
+  T extends keyof MainNavigationScreenParam
+> = MainNavigationScreenParam<T>['navigation'];

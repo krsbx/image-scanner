@@ -6,10 +6,9 @@ export type MainNavigationParam = {
   Crop: undefined;
 };
 
-export type MainNavigationScreenParam<
-  T extends keyof MainNavigationScreenParam
-> = StackScreenProps<MainNavigationParam, T>;
+export type MainNavigationScreenParam<T extends keyof MainNavigationParam> =
+  StackScreenProps<MainNavigationParam, T>;
 
 export type MainNavigationScreenNavigation<
-  T extends keyof MainNavigationScreenParam
+  T extends keyof MainNavigationParam
 > = MainNavigationScreenParam<T>['navigation'];

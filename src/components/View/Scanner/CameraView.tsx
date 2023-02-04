@@ -4,6 +4,7 @@ import Scanner, {
   RectangleOverlay,
   ScannerView,
   ScannerComponentProps,
+  Filters,
 } from 'react-native-rectangle-scanner';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../../../store';
@@ -101,6 +102,7 @@ const CameraView: React.FC<Props> = ({
         onPictureProcessed={onPictureProcessed}
         onPictureTaken={onPictureTaken}
         onRectangleDetected={onRectangleDetected}
+        filterId={Filters.COLOR_FILTER.id}
       />
       {!scanner.isLoadingCamera && !scanner.isProcessingImage ? (
         <RectangleOverlay

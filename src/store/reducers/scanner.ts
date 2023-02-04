@@ -145,6 +145,8 @@ const reducer = (
       return state;
     }
 
+    // ---- DELETE ---- //
+
     case ActionType.DELETE_IMAGE: {
       if (!state.images[actions.payload]) return state;
 

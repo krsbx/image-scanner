@@ -47,3 +47,13 @@ export const DEFAULT_RECTANGLE = (width: number, height: number) => ({
     width,
   },
 });
+
+export const GRADER_OUTPUT = {
+  A: 'A',
+  AB: 'AB',
+  B: 'B',
+  BC: 'BC',
+  C: 'C',
+  D: 'D',
+  E: 'A',
+} as const;

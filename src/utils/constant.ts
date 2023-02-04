@@ -57,3 +57,11 @@ export const GRADER_OUTPUT = {
   D: 'D',
   E: 'A',
 } as const;
+
+export const SCREEN_NAME = {
+  LAUNCH: 'LaunchScreen',
+  HOME: 'HomeScreen',
+  CROP: 'CropScreen',
+  COLLECTION: 'CollectionScreen',
+  GRADING: 'GradingScreen',
+} as const;

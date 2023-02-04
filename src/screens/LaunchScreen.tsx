@@ -5,7 +5,7 @@ import { IMAGE } from '../assets';
 import useCameraPermission from '../hooks/useCameraPermission';
 import useEffectOnce from '../hooks/useEffectOnce';
 import { MainNavigationScreenNavigation } from '../types/Navigation';
-import { DIMENSSIONS } from '../utils/constant';
+import { DIMENSSIONS, SCREEN_NAME } from '../utils/constant';
 
 const LaunchScreen: React.FC = () => {
   const navigation =
@@ -22,7 +22,7 @@ const LaunchScreen: React.FC = () => {
 
     switch (status) {
       case 'granted': {
-        navigation.replace('HomeScreen');
+        navigation.replace(SCREEN_NAME.HOME);
         return;
       }
 
@@ -101,7 +101,7 @@ const LaunchScreen: React.FC = () => {
 
     switch (status) {
       case 'granted': {
-        setTimeout(() => navigation.replace('HomeScreen'), 2000);
+        setTimeout(() => navigation.replace(SCREEN_NAME.HOME), 2000);
         return;
       }
 

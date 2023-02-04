@@ -8,6 +8,7 @@ import { getStoredImages, getTotalImage } from '../../store/selectors/scanner';
 import { MainNavigationScreenNavigation } from '../../types/Navigation';
 import { controlStyle, overlayStyle } from '../../styles';
 import { setScanner as _setScanner } from '../../store/actions/scanner';
+import { SCREEN_NAME } from '../../utils/constant';
 
 const Gallery: React.FC<Props> = ({ totalImage, images, setScanner }) => {
   const navigation =
@@ -18,7 +19,7 @@ const Gallery: React.FC<Props> = ({ totalImage, images, setScanner }) => {
       isOnScannerView: false,
     });
 
-    navigation.replace('CollectionScreen');
+    navigation.replace(SCREEN_NAME.COLLECTION);
   };
 
   return (

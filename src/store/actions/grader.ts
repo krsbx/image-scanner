@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { AppDispatch } from '..';
 import {
   GraderActionType,
@@ -22,6 +23,47 @@ export const resetGrader = () => (dispatch: AppDispatch) =>
   dispatch({
     type: GraderActionType.RESET,
   });
+
+export const gradeImages =
+  (payload: GraderInput | GraderInput[]) => async (dispatch: AppDispatch) => {
+    dispatch({
+      type: GraderActionType.SET,
+      payload: {
+        input: Array.isArray(payload) ? payload : [payload],
+        isOnGrading: true,
+      },
+    });
+
+    setTimeout(() => {
+      dispatch({
+        type: GraderActionType.SET,
+        payload: {
+          isOnGrading: false,
+        },
+      });
+    }, 3000);
+
+    // try {
+    //   const { data } = await axios.post<GraderOutput[]>('USE .ENV', {
+    //     images: Array.isArray(payload) ? payload : [payload],
+    //   });
+
+    //   dispatch({
+    //     type: GraderActionType.SET,
+    //     payload: {
+    //       isOnGrading: false,
+    //       output: data,
+    //     },
+    //   });
+    // } catch {
+    //   dispatch({
+    //     type: GraderActionType.SET,
+    //     payload: {
+    //       isOnGrading: false,
+    //     },
+    //   });
+    // }
+  };
 
 // ---- PUSH ---- //
 

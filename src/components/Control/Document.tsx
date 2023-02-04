@@ -9,7 +9,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { setScanner as _setScanner } from '../../store/actions/scanner';
 import { controlStyle } from '../../styles';
 import { MainNavigationScreenNavigation } from '../../types/Navigation';
-import { DEFAULT_RECTANGLE } from '../../utils/constant';
+import { DEFAULT_RECTANGLE, SCREEN_NAME } from '../../utils/constant';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
   const navigation =
@@ -45,7 +45,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
           });
         });
 
-        navigation.replace('CropScreen');
+        navigation.replace(SCREEN_NAME.CROP, {});
         break;
       }
 
@@ -64,12 +64,12 @@ const Document: React.FC<Props> = ({ setScanner }) => {
           detectedRectangle: DEFAULT_RECTANGLE(width, height),
         });
 
-        navigation.replace('CropScreen');
+        navigation.replace(SCREEN_NAME.CROP, {});
         break;
       }
 
       default:
-        navigation.replace('HomeScreen');
+        navigation.replace(SCREEN_NAME.HOME);
         break;
     }
   };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useCallback, useState, useRef, Component } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   View,
   Image,
@@ -13,7 +13,6 @@ import CustomCrop, {
   CustomCropProps,
   CustomCropView,
 } from 'react-native-perspective-image-cropper';
-import { DetectedRectangle } from 'react-native-rectangle-scanner';
 import { connect, ConnectedProps } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -30,7 +29,11 @@ import {
   getSelectedImageIndex,
 } from '../store/selectors/scanner';
 import { controlStyle, globalStyle } from '../styles';
-import { MainNavigationScreenNavigation } from '../types/Navigation';
+import {
+  MainNavigationScreenNavigation,
+  MainNavigationScreenRoute,
+} from '../types/Navigation';
+import { SCREEN_NAME } from '../utils/constant';
 
 const CropScreen: React.FC<Props> = ({
   setScanner,
@@ -44,6 +47,7 @@ const CropScreen: React.FC<Props> = ({
 }) => {
   const navigation =
     useNavigation<MainNavigationScreenNavigation<'CropScreen'>>();
+  const route = useRoute<MainNavigationScreenRoute<'CropScreen'>>();
 
   const [initialImage] = useState(image?.initialImage);
   const [rectangleCoordinates, setRectangleCoordinates] =
@@ -77,7 +81,7 @@ const CropScreen: React.FC<Props> = ({
       image: undefined,
     });
 
-    navigation.replace('HomeScreen');
+    navigation.replace(route.params.from ?? SCREEN_NAME.COLLECTION);
   };
 
   const onPressUndo = () => setCroppedImage(undefined);
@@ -106,7 +110,7 @@ const CropScreen: React.FC<Props> = ({
       image: undefined,
     });
 
-    navigation.replace('HomeScreen');
+    navigation.replace(route.params.from ?? SCREEN_NAME.HOME);
   };
 
   const onPressCrop = () => cropRef.current?.crop?.();

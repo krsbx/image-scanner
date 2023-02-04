@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
   buttonBottomContainer: {
     alignItems: 'flex-end',
-    bottom: 40,
+    bottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     left: 25,

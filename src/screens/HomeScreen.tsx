@@ -9,7 +9,7 @@ import { setDevice as _setDevice } from '../store/actions/device';
 import { getScanner } from '../store/selectors/scanner';
 import { getDevice } from '../store/selectors/device';
 import useSnapAnimation from '../hooks/useSnapAnimation';
-import { DIMENSSIONS } from '../utils/constant';
+import { DIMENSSIONS, SCREEN_NAME } from '../utils/constant';
 import ScannerView from '../components/View/Scanner/ScannerView';
 import { MainNavigationScreenNavigation } from '../types/Navigation';
 import { globalStyle } from '../styles';
@@ -129,7 +129,7 @@ const HomeScreen: React.FC<Props> = ({
   useEffect(() => {
     if (!image) return;
 
-    navigation.replace('CropScreen');
+    navigation.replace(SCREEN_NAME.CROP, {});
   }, [image]);
 
   return (

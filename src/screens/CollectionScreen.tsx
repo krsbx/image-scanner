@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { BackHandler, Image, TouchableOpacity, View } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatGrid } from 'react-native-super-grid';
 import { connect, ConnectedProps } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,23 +8,56 @@ import { AppState } from '../store';
 import {
   deleteDetectedRectangle as _deleteDetectedRectangle,
   deleteImage as _deleteImage,
+  setScanner as _setScanner,
 } from '../store/actions/scanner';
 import { getStoredImages } from '../store/selectors/scanner';
 import { controlStyle, globalStyle } from '../styles';
+import { MainNavigationScreenNavigation } from '../types/Navigation';
 
 const CollectionScreen: React.FC<Props> = ({
-  images: reduxImages,
+  images,
   deleteDetectedRectangle,
   deleteImage,
+  setScanner,
 }) => {
-  const [images, setImages] = useState(reduxImages);
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'CollectionScreen'>>();
 
-  const removeImage = (index: number) => {
+  const onRemoveImage = (index: number) => {
     deleteImage(index);
     deleteDetectedRectangle(index);
-
-    setImages((prev) => prev.filter((_, id) => id !== index));
   };
+
+  const onSelectImage = (index: number) => {
+    if (!images[index]) return;
+
+    setScanner((prev) => ({
+      selectedImage: index,
+      image: prev.images[index],
+      detectedRectangle: prev.detectedRectangles[index],
+    }));
+
+    setTimeout(() => {
+      navigation.replace('CropScreen');
+    }, 500);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        navigation.replace('HomeScreen');
+
+        return true;
+      };
+
+      const subs = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subs.remove();
+    }, [])
+  );
 
   return (
     <FlatGrid
@@ -31,9 +65,11 @@ const CollectionScreen: React.FC<Props> = ({
       data={images}
       style={[globalStyle.mainContainer]}
       renderItem={({ item, index }) => (
-        <View
-          key={`collections-${index}`}
+        <TouchableOpacity
           style={{ position: 'relative', marginTop: 10, marginHorizontal: 5 }}
+          activeOpacity={0.8}
+          onPress={() => onSelectImage(index)}
+          key={`collections-${index}`}
         >
           <View
             style={{
@@ -55,7 +91,7 @@ const CollectionScreen: React.FC<Props> = ({
           <TouchableOpacity
             style={{ position: 'absolute', top: -10, right: -10 }}
             activeOpacity={0.8}
-            onPress={() => removeImage(index)}
+            onPress={() => onRemoveImage(index)}
           >
             <Icon
               name="ios-close-circle"
@@ -63,7 +99,7 @@ const CollectionScreen: React.FC<Props> = ({
               style={controlStyle.buttonIcon}
             />
           </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );
@@ -76,6 +112,7 @@ const mapStateToProps = (state: AppState) => ({
 const connector = connect(mapStateToProps, {
   deleteImage: _deleteImage,
   deleteDetectedRectangle: _deleteDetectedRectangle,
+  setScanner: _setScanner,
 });
 
 type Props = ConnectedProps<typeof connector>;

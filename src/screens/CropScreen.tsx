@@ -1,6 +1,13 @@
+import React, { useCallback, useState, useRef, Component } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useRef, Component } from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  BackHandler,
+} from 'react-native';
 import CustomCrop, {
   CustomCropProps,
   CustomCropView,
@@ -8,6 +15,7 @@ import CustomCrop, {
 import { DetectedRectangle } from 'react-native-rectangle-scanner';
 import { connect, ConnectedProps } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 import { AppState } from '../store';
 import {
   setScanner as _setScanner,
@@ -92,6 +100,24 @@ const CropScreen: React.FC<Props> = ({
   };
 
   const onPressCrop = () => cropRef.current?.crop?.();
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (croppedImage) onPressUndo();
+        else onPressBack();
+
+        return true;
+      };
+
+      const subs = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subs.remove();
+    }, [croppedImage])
+  );
 
   return (
     <View style={globalStyle.mainContainer}>

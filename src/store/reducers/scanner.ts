@@ -84,27 +84,34 @@ const reducer = (
     // ---- PUSH ---- //
 
     case ActionType.PUSH_IMAGE: {
-      state.images.push(actions.payload);
-
-      return state;
+      return {
+        ...state,
+        images: [...state.images, actions.payload],
+      };
     }
 
     case ActionType.PUSH_CROPPED_IMAGE: {
-      state.croppedImages.push(actions.payload);
-
-      return state;
+      return {
+        ...state,
+        croppedImages: [...state.croppedImages, actions.payload],
+      };
     }
 
     case ActionType.PUSH_DETECTED_RECTANGLE: {
-      state.detectedRectangles.push(actions.payload);
-
-      return state;
+      return {
+        ...state,
+        detectedRectangles: [...state.detectedRectangles, actions.payload],
+      };
     }
 
     // ---- UPDATE ---- //
 
     case ActionType.UPDATE_IMAGE: {
-      if (!state.images[actions.payload.index]) return state;
+      if (!state.images[actions.payload.index])
+        return {
+          ...state,
+          images: [...state.images, actions.payload.data],
+        };
 
       state.images[actions.payload.index] = actions.payload.data;
 
@@ -112,7 +119,11 @@ const reducer = (
     }
 
     case ActionType.UPDATE_CROPPED_IMAGE: {
-      if (!state.croppedImages[actions.payload.index]) return state;
+      if (!state.croppedImages[actions.payload.index])
+        return {
+          ...state,
+          croppedImages: [...state.croppedImages, actions.payload.data],
+        };
 
       state.croppedImages[actions.payload.index] = actions.payload.data;
 
@@ -120,7 +131,14 @@ const reducer = (
     }
 
     case ActionType.UPDATE_DETECTED_RECTANGLE: {
-      if (!state.detectedRectangles[actions.payload.index]) return state;
+      if (!state.detectedRectangles[actions.payload.index])
+        return {
+          ...state,
+          detectedRectangles: [
+            ...state.detectedRectangles,
+            actions.payload.data,
+          ],
+        };
 
       state.detectedRectangles[actions.payload.index] = actions.payload.data;
 
@@ -132,7 +150,10 @@ const reducer = (
 
       state.images.splice(actions.payload, 1);
 
-      return state;
+      return {
+        ...state,
+        images: [...state.images],
+      };
     }
 
     case ActionType.DELETE_CROPPED_RECTANGLE: {
@@ -140,7 +161,10 @@ const reducer = (
 
       state.croppedImages.splice(actions.payload, 1);
 
-      return state;
+      return {
+        ...state,
+        croppedImages: [...state.croppedImages],
+      };
     }
 
     case ActionType.DELETE_DETECTED_RECTANGLE: {
@@ -148,7 +172,10 @@ const reducer = (
 
       state.detectedRectangles.splice(actions.payload, 1);
 
-      return state;
+      return {
+        ...state,
+        detectedRectangles: [...state.detectedRectangles],
+      };
     }
 
     default: {

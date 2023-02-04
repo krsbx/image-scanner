@@ -28,10 +28,8 @@ declare module 'react-native-perspective-image-cropper' {
     initialImage: string;
     updateImage: (
       path: string,
-      coordinates: Omit<DetectedRectangle, 'dimensions'> & {
-        height: number;
-        width: number;
-      }
+      coordinates: Omit<DetectedRectangle, 'dimensions'> &
+        DetectedRectangle['dimensions']
     ) => void;
     width: number;
   }

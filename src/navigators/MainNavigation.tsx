@@ -10,7 +10,7 @@ const Stack = createStackNavigator<MainNavigationParam>();
 
 const MainNavigation: React.FC = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <Stack.Navigator
         initialRouteName="LaunchScreen"
         screenOptions={{

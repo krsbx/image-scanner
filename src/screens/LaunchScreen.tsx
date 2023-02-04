@@ -10,6 +10,7 @@ import { DIMENSSIONS } from '../utils/constant';
 const LaunchScreen: React.FC = () => {
   const navigation =
     useNavigation<MainNavigationScreenNavigation<'LaunchScreen'>>();
+  const blurRadius = useRef(new Animated.Value(0));
   const logoOpacity = useRef(new Animated.Value(0));
   const textOpacity = useRef(new Animated.Value(0));
   const transformDown = useRef(new Animated.Value(0));
@@ -42,6 +43,21 @@ const LaunchScreen: React.FC = () => {
       Animated.timing(logoOpacity.current, {
         toValue: 1,
         duration: 500,
+        useNativeDriver: false,
+        easing: Easing.exp,
+      }),
+    ]).start();
+
+    Animated.sequence([
+      Animated.timing(blurRadius.current, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: false,
+      }),
+      Animated.timing(blurRadius.current, {
+        toValue: 3,
+        duration: 500,
+        delay: 600,
         useNativeDriver: false,
         easing: Easing.exp,
       }),
@@ -102,6 +118,7 @@ const LaunchScreen: React.FC = () => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'black',
       }}
     >
       <Animated.Image
@@ -112,6 +129,7 @@ const LaunchScreen: React.FC = () => {
           position: 'absolute',
         }}
         resizeMode={'cover'}
+        blurRadius={blurRadius.current}
       />
       <View
         style={{
@@ -137,7 +155,7 @@ const LaunchScreen: React.FC = () => {
       >
         <Animated.Text
           style={{
-            color: 'rgba(0, 0, 0, 1)',
+            color: 'rgba(0, 0, 0, 0.6)',
             textTransform: 'uppercase',
             fontWeight: '900',
             letterSpacing: 5,
@@ -148,7 +166,7 @@ const LaunchScreen: React.FC = () => {
         </Animated.Text>
         <Animated.Text
           style={{
-            color: 'rgba(0, 0, 0, 1)',
+            color: 'rgba(0, 0, 0, 0.6)',
             textTransform: 'uppercase',
             fontWeight: '900',
             letterSpacing: 5,

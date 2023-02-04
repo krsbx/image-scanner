@@ -1,15 +1,33 @@
 import React from 'react';
 import { Image, View, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { connect, ConnectedProps } from 'react-redux';
 import { IMAGE } from '../../assets';
 import { AppState } from '../../store';
 import { getStoredImages, getTotalImage } from '../../store/selectors/scanner';
+import { MainNavigationScreenNavigation } from '../../types/Navigation';
 import { controlStyle, overlayStyle } from '../../styles';
+import { setScanner as _setScanner } from '../../store/actions/scanner';
 
-const Gallery: React.FC<Props> = ({ totalImage, images }) => {
+const Gallery: React.FC<Props> = ({ totalImage, images, setScanner }) => {
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'HomeScreen'>>();
+
+  const onPress = () => {
+    setScanner({
+      isOnScannerView: false,
+    });
+
+    navigation.replace('CollectionScreen');
+  };
+
   return (
     <View style={controlStyle.buttonGroup}>
-      <TouchableOpacity style={controlStyle.button} activeOpacity={0.8}>
+      <TouchableOpacity
+        style={controlStyle.button}
+        activeOpacity={0.8}
+        onPress={onPress}
+      >
         <View
           style={[
             overlayStyle.cameraOutline,
@@ -64,7 +82,9 @@ const mapStateToProps = (state: AppState) => ({
   images: getStoredImages(state),
 });
 
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, {
+  setScanner: _setScanner,
+});
 
 type Props = ConnectedProps<typeof connector>;
 

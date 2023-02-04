@@ -4,6 +4,7 @@ import LaunchScreen from '../screens/LaunchScreen';
 import HomeScreen from '../screens/HomeScreen';
 import CropScreen from '../screens/CropScreen';
 import { MainNavigationParam } from '../types/Navigation';
+import CollectionScreen from '../screens/CollectionScreen';
 
 const Stack = createStackNavigator<MainNavigationParam>();
 
@@ -11,14 +12,15 @@ const MainNavigation: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Stack.Navigator
-        initialRouteName="Launch"
+        initialRouteName="LaunchScreen"
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="Launch" component={LaunchScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Crop" component={CropScreen} />
+        <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="CropScreen" component={CropScreen} />
+        <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
       </Stack.Navigator>
     </SafeAreaView>
   );

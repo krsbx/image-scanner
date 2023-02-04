@@ -33,7 +33,8 @@ const CropScreen: React.FC<Props> = ({
   pushImage,
   pushDetectedRectangle,
 }) => {
-  const navigation = useNavigation<MainNavigationScreenNavigation<'Crop'>>();
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'CropScreen'>>();
 
   const [initialImage] = useState(image?.initialImage);
   const [rectangleCoordinates, setRectangleCoordinates] =
@@ -56,7 +57,7 @@ const CropScreen: React.FC<Props> = ({
       image: undefined,
     });
 
-    navigation.replace('Home');
+    navigation.replace('HomeScreen');
   };
 
   const onPressUndo = () => setCroppedImage(undefined);
@@ -87,19 +88,14 @@ const CropScreen: React.FC<Props> = ({
       image: undefined,
     });
 
-    navigation.replace('Home');
+    navigation.replace('HomeScreen');
   };
 
   const onPressCrop = () => cropRef.current?.crop?.();
 
   return (
-    <View
-      style={{
-        backgroundColor: 'rgba(0, 0, 0, 1)',
-        flex: 1,
-      }}
-    >
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={globalStyle.mainContainer}>
+      <View style={styles.container}>
         {!croppedImage ? (
           <CustomCrop
             updateImage={onUpdateImage}
@@ -122,8 +118,8 @@ const CropScreen: React.FC<Props> = ({
         ) : (
           <Image
             style={[
-              styles.croppedImage,
-              height < width ? styles.croppedImageRot : {},
+              globalStyle.croppedImage,
+              height < width ? globalStyle.croppedImageRot : {},
             ]}
             source={{ uri: `data:image/png;base64,${croppedImage}` }}
           />
@@ -184,39 +180,9 @@ type Props = ConnectedProps<typeof connector>;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    bottom: 10,
-  },
-  croppedImage: {
-    height: '40%',
-    width: '100%',
-    resizeMode: 'contain',
-  },
-  croppedImageRot: {
-    transform: [{ rotateZ: '180deg' }, { rotateY: '180deg' }],
-  },
-  button: {
-    backgroundColor: '#fefefe',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
-    width: 150,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 15,
   },
 });
 

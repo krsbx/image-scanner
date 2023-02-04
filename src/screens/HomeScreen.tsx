@@ -1,11 +1,5 @@
 import React, { createRef, useRef, useEffect } from 'react';
-import {
-  LayoutChangeEvent,
-  StatusBar,
-  StyleSheet,
-  Platform,
-  View,
-} from 'react-native';
+import { LayoutChangeEvent, StatusBar, Platform, View } from 'react-native';
 import { connect, ConnectedProps } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ScannerView as RectScannerView } from 'react-native-rectangle-scanner';
@@ -18,6 +12,7 @@ import useSnapAnimation from '../hooks/useSnapAnimation';
 import { DIMENSSIONS } from '../utils/constant';
 import ScannerView from '../components/View/Scanner/ScannerView';
 import { MainNavigationScreenNavigation } from '../types/Navigation';
+import { globalStyle } from '../styles';
 
 const HomeScreen: React.FC<Props> = ({
   scanner,
@@ -36,7 +31,8 @@ const HomeScreen: React.FC<Props> = ({
     image,
   } = scanner;
 
-  const navigation = useNavigation<MainNavigationScreenNavigation<'Home'>>();
+  const navigation =
+    useNavigation<MainNavigationScreenNavigation<'HomeScreen'>>();
   const { flashOpacity, startSnapAnimation } = useSnapAnimation();
 
   const cameraRef = createRef<RectScannerView>();
@@ -133,11 +129,11 @@ const HomeScreen: React.FC<Props> = ({
   useEffect(() => {
     if (!image) return;
 
-    navigation.replace('Crop');
+    navigation.replace('CropScreen');
   }, [image]);
 
   return (
-    <View style={styles.container} onLayout={onLayout}>
+    <View style={globalStyle.mainContainer} onLayout={onLayout}>
       <StatusBar
         backgroundColor="black"
         barStyle="light-content"
@@ -166,12 +162,5 @@ const connector = connect(mapStateToProps, {
 type Props = ConnectedProps<typeof connector> & {
   cameraIsOn?: boolean;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'black',
-    flex: 1,
-  },
-});
 
 export default connector(HomeScreen);

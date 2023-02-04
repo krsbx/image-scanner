@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useCallback, useState, useRef, Component } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -51,11 +52,22 @@ const CropScreen: React.FC<Props> = ({
   const [croppedImage, setCroppedImage] = useState<string>();
   const cropRef = useRef<CustomCropView>();
 
-  const onUpdateImage = (image: string, newCoordinates: DetectedRectangle) => {
+  const onUpdateImage: CustomCropProps['updateImage'] = (
+    image,
+    newCoordinates
+  ) => {
+    const detectedRectangle = {
+      ..._.omit(newCoordinates, ['width', 'height']),
+      dimensions: {
+        width: newCoordinates.width,
+        height: newCoordinates.height,
+      },
+    };
+
     setScanner({
-      detectedRectangle: newCoordinates,
+      detectedRectangle,
     });
-    setRectangleCoordinates(newCoordinates);
+    setRectangleCoordinates(detectedRectangle);
     setCroppedImage(image);
   };
 
@@ -71,25 +83,23 @@ const CropScreen: React.FC<Props> = ({
   const onPressUndo = () => setCroppedImage(undefined);
 
   const onPressDone = () => {
-    if (selectedImage !== -1 && croppedImage) {
+    if (!croppedImage) return;
+
+    if (selectedImage !== -1) {
       updateImage(selectedImage, {
         initialImage,
         croppedImage,
       });
 
       updateDetectedRectangle(selectedImage, detectedRectangle);
+    } else {
+      pushImage({
+        initialImage,
+        croppedImage,
+      });
 
-      return;
+      pushDetectedRectangle(detectedRectangle);
     }
-
-    if (!croppedImage) return;
-
-    pushImage({
-      initialImage,
-      croppedImage,
-    });
-
-    pushDetectedRectangle(detectedRectangle);
 
     setScanner({
       detectedRectangle: undefined,

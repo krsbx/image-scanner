@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { BackHandler, Image, TouchableOpacity, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatGrid } from 'react-native-super-grid';
@@ -37,9 +37,7 @@ const CollectionScreen: React.FC<Props> = ({
       detectedRectangle: prev.detectedRectangles[index],
     }));
 
-    setTimeout(() => {
-      navigation.replace('CropScreen');
-    }, 500);
+    navigation.replace('CropScreen');
   };
 
   useFocusEffect(

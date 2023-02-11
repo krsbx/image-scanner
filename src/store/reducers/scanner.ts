@@ -107,7 +107,7 @@ const reducer = (
     // ---- UPDATE ---- //
 
     case ActionType.UPDATE_IMAGE: {
-      if (!state.images[actions.payload.index])
+      if (_.isEmpty(state.images[actions.payload.index]))
         return {
           ...state,
           images: [...state.images, actions.payload.data],
@@ -119,7 +119,7 @@ const reducer = (
     }
 
     case ActionType.UPDATE_CROPPED_IMAGE: {
-      if (!state.croppedImages[actions.payload.index])
+      if (_.isEmpty(state.croppedImages[actions.payload.index]))
         return {
           ...state,
           croppedImages: [...state.croppedImages, actions.payload.data],
@@ -131,7 +131,7 @@ const reducer = (
     }
 
     case ActionType.UPDATE_DETECTED_RECTANGLE: {
-      if (!state.detectedRectangles[actions.payload.index])
+      if (_.isEmpty(state.detectedRectangles[actions.payload.index]))
         return {
           ...state,
           detectedRectangles: [
@@ -148,7 +148,13 @@ const reducer = (
     // ---- DELETE ---- //
 
     case ActionType.DELETE_IMAGE: {
-      if (!state.images[actions.payload]) return state;
+      if (_.isEmpty(state.images[actions.payload])) return state;
+
+      if (state.images.length === 1)
+        return {
+          ...state,
+          images: [],
+        };
 
       state.images.splice(actions.payload, 1);
 
@@ -159,7 +165,13 @@ const reducer = (
     }
 
     case ActionType.DELETE_CROPPED_RECTANGLE: {
-      if (!state.croppedImages[actions.payload]) return state;
+      if (_.isEmpty(state.croppedImages[actions.payload])) return state;
+
+      if (state.croppedImages.length === 1)
+        return {
+          ...state,
+          croppedImages: [],
+        };
 
       state.croppedImages.splice(actions.payload, 1);
 
@@ -170,7 +182,13 @@ const reducer = (
     }
 
     case ActionType.DELETE_DETECTED_RECTANGLE: {
-      if (!state.detectedRectangles[actions.payload]) return state;
+      if (_.isEmpty(state.detectedRectangles[actions.payload])) return state;
+
+      if (state.detectedRectangles.length === 1)
+        return {
+          ...state,
+          detectedRectangles: [],
+        };
 
       state.detectedRectangles.splice(actions.payload, 1);
 

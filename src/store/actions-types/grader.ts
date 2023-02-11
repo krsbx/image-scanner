@@ -6,6 +6,7 @@ export type GraderInput = {
 
 export type GraderOutput = {
   score: ValueOf<typeof GRADER_OUTPUT>;
+  times: number;
 };
 
 export type GraderReducer = {

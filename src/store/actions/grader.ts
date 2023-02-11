@@ -1,5 +1,6 @@
-import axios from 'axios';
+import _ from 'lodash';
 import { AppDispatch } from '..';
+import { gradeImage } from '../../utils/common';
 import {
   GraderActionType,
   GraderReducer,
@@ -43,26 +44,28 @@ export const gradeImages =
       });
     }, 3000);
 
-    // try {
-    //   const { data } = await axios.post<GraderOutput[]>('USE .ENV', {
-    //     images: Array.isArray(payload) ? payload : [payload],
-    //   });
+    try {
+      const results = await Promise.all(
+        _.map(Array.isArray(payload) ? payload : [payload], ({ image }) =>
+          gradeImage(image)
+        )
+      );
 
-    //   dispatch({
-    //     type: GraderActionType.SET,
-    //     payload: {
-    //       isOnGrading: false,
-    //       output: data,
-    //     },
-    //   });
-    // } catch {
-    //   dispatch({
-    //     type: GraderActionType.SET,
-    //     payload: {
-    //       isOnGrading: false,
-    //     },
-    //   });
-    // }
+      dispatch({
+        type: GraderActionType.SET,
+        payload: {
+          isOnGrading: false,
+          output: results.map(([result, err]) => result!),
+        },
+      });
+    } catch {
+      dispatch({
+        type: GraderActionType.SET,
+        payload: {
+          isOnGrading: false,
+        },
+      });
+    }
   };
 
 // ---- PUSH ---- //

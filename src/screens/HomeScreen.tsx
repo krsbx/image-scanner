@@ -129,7 +129,9 @@ const HomeScreen: React.FC<Props> = ({
   useEffect(() => {
     if (!image) return;
 
-    navigation.replace(SCREEN_NAME.CROP, {});
+    navigation.replace(SCREEN_NAME.CROP, {
+      from: SCREEN_NAME.HOME,
+    });
   }, [image]);
 
   return (

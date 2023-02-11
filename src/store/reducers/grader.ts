@@ -98,6 +98,12 @@ const reducer = (
     case ActionType.DELETE_INPUT: {
       if (!state.input[actions.payload]) return state;
 
+      if (state.input.length === 1)
+        return {
+          ...state,
+          input: [],
+        };
+
       state.input.splice(actions.payload, 1);
 
       return {
@@ -110,6 +116,12 @@ const reducer = (
       if (!state.output[actions.payload]) return state;
 
       state.output.splice(actions.payload, 1);
+
+      if (state.output.length === 1)
+        return {
+          ...state,
+          output: [],
+        };
 
       return {
         ...state,

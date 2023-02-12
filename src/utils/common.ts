@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../store/axios';
 import { GraderOutput } from '../store/actions-types/grader';
 
 export const gradeImage = async (image: string) => {
@@ -9,15 +9,9 @@ export const gradeImage = async (image: string) => {
       code: number;
       status: string;
       data: GraderOutput[];
-    }>(
-      '/grades',
-      {
-        image,
-      },
-      {
-        baseURL: 'http://192.168.18.185:3001',
-      }
-    );
+    }>('/grades', {
+      image,
+    });
 
     return [data[0], null] as const;
   } catch (err) {

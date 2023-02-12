@@ -53,7 +53,7 @@ const GradingScreen: React.FC<Props> = ({
       );
 
       return () => subs.remove();
-    }, [input, output])
+    }, [input, output, selectedImage])
   );
 
   return (
@@ -77,7 +77,7 @@ const GradingScreen: React.FC<Props> = ({
       {selectedImage > -1 ? (
         <DocumentResult
           imageIndex={selectedImage}
-          onPressOutside={() => setSelectedImage(-1)}
+          onPressOutside={onPressOnClose}
         />
       ) : null}
       <View

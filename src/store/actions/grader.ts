@@ -35,15 +35,6 @@ export const gradeImages =
       },
     });
 
-    setTimeout(() => {
-      dispatch({
-        type: GraderActionType.SET,
-        payload: {
-          isOnGrading: false,
-        },
-      });
-    }, 3000);
-
     try {
       const results = await Promise.all(
         _.map(Array.isArray(payload) ? payload : [payload], ({ image }) =>
@@ -51,13 +42,15 @@ export const gradeImages =
         )
       );
 
-      dispatch({
-        type: GraderActionType.SET,
-        payload: {
-          isOnGrading: false,
-          output: results.map(([result, err]) => result!),
-        },
-      });
+      setTimeout(() => {
+        dispatch({
+          type: GraderActionType.SET,
+          payload: {
+            isOnGrading: false,
+            output: results.map(([result, err]) => result!),
+          },
+        });
+      }, 3000);
     } catch {
       dispatch({
         type: GraderActionType.SET,

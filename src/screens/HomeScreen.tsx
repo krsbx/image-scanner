@@ -1,7 +1,13 @@
-import React, { createRef, useRef, useEffect } from 'react';
-import { LayoutChangeEvent, StatusBar, Platform, View } from 'react-native';
+import React, { createRef, useRef, useEffect, useCallback } from 'react';
+import {
+  LayoutChangeEvent,
+  StatusBar,
+  Platform,
+  View,
+  BackHandler,
+} from 'react-native';
 import { connect, ConnectedProps } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ScannerView as RectScannerView } from 'react-native-rectangle-scanner';
 import { AppState } from '../store';
 import { setScanner as _setScanner } from '../store/actions/scanner';
@@ -133,6 +139,23 @@ const HomeScreen: React.FC<Props> = ({
       from: SCREEN_NAME.HOME,
     });
   }, [image]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (!__DEV__) throw {};
+
+        return true;
+      };
+
+      const subs = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subs.remove();
+    }, [])
+  );
 
   return (
     <View style={globalStyle.mainContainer} onLayout={onLayout}>

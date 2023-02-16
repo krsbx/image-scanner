@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { BackHandler, Image, TouchableOpacity, Text, View } from 'react-native';
+import { BackHandler, TouchableOpacity, Text, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatGrid } from 'react-native-super-grid';
 import { connect, ConnectedProps } from 'react-redux';

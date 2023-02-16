@@ -38,9 +38,11 @@ const DocumentResult: React.FC<Props> = ({
         ]}
       />
       <View style={styles.resultContainer}>
-        <Text style={[styles.gradeText]}>Grade : {imageResult.score}</Text>
+        <Text style={[styles.gradeText]}>
+          Grade : {imageResult?.score ?? 'NULL'}
+        </Text>
         <Text style={[styles.gradeText, styles.gradeTimeText]}>
-          Time Needed : {(imageResult.times ?? 0).toFixed(3)} ms
+          Time Needed : {(imageResult?.times ?? 0).toFixed(3)} ms
         </Text>
       </View>
     </View>

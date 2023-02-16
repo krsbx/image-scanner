@@ -16,61 +16,65 @@ const Document: React.FC<Props> = ({ setScanner }) => {
     useNavigation<MainNavigationScreenNavigation<'HomeScreen'>>();
 
   const onPress = async () => {
-    setScanner({
-      isOnScannerView: false,
-    });
+    try {
+      setScanner({
+        isOnScannerView: false,
+      });
 
-    const { fileCopyUri: filePath, name } = await DocumentPicker.pickSingle({
-      type: [DocumentPicker.types.pdf, 'image/jpg', 'image/jpeg'],
-      copyTo: 'cachesDirectory',
-    });
+      const { fileCopyUri: filePath, name } = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.pdf, 'image/jpg', 'image/jpeg'],
+        copyTo: 'cachesDirectory',
+      });
 
-    if (!filePath) return;
+      if (!filePath) return;
 
-    const ext = name?.split('.').pop();
+      const ext = name?.split('.').pop();
 
-    switch (ext) {
-      case 'jpeg':
-      case 'jpg': {
-        setScanner({
-          image: {
-            initialImage: filePath,
-            croppedImage: '',
-          },
-        });
+      switch (ext) {
+        case 'jpeg':
+        case 'jpg': {
+          Image.getSize(filePath, (width, height) => {
+            setScanner({
+              detectedRectangle: DEFAULT_RECTANGLE(width, height),
+              image: {
+                initialImage: filePath,
+                croppedImage: '',
+              },
+            });
 
-        Image.getSize(filePath, (width, height) => {
+            navigation.replace(SCREEN_NAME.CROP, {});
+          });
+
+          break;
+        }
+
+        case 'pdf': {
+          const { height, uri, width } = await PdfThumbnail.generate(
+            filePath,
+            0,
+            90
+          );
+
           setScanner({
+            image: {
+              initialImage: uri,
+              croppedImage: '',
+            },
             detectedRectangle: DEFAULT_RECTANGLE(width, height),
           });
-        });
 
-        navigation.replace(SCREEN_NAME.CROP, {});
-        break;
+          navigation.replace(SCREEN_NAME.CROP, {});
+          break;
+        }
+
+        default:
+          navigation.replace(SCREEN_NAME.HOME);
+          break;
       }
-
-      case 'pdf': {
-        const { height, uri, width } = await PdfThumbnail.generate(
-          filePath,
-          0,
-          90
-        );
-
-        setScanner({
-          image: {
-            initialImage: uri,
-            croppedImage: '',
-          },
-          detectedRectangle: DEFAULT_RECTANGLE(width, height),
-        });
-
-        navigation.replace(SCREEN_NAME.CROP, {});
-        break;
-      }
-
-      default:
-        navigation.replace(SCREEN_NAME.HOME);
-        break;
+    } catch {
+      setScanner({
+        isOnScannerView: true,
+      });
     }
   };
 

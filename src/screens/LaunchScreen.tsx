@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Animated, Easing, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { IMAGE } from '../assets';
-import useCameraPermission from '../hooks/useCameraPermission';
+import usePermission from '../hooks/usePermission';
 import useEffectOnce from '../hooks/useEffectOnce';
 import { MainNavigationScreenNavigation } from '../types/Navigation';
 import { DIMENSSIONS, SCREEN_NAME } from '../utils/constant';
@@ -15,9 +15,13 @@ const LaunchScreen: React.FC = () => {
   const textOpacity = useRef(new Animated.Value(0));
   const transformDown = useRef(new Animated.Value(0));
 
-  const { requestCameraPermissions } = useCameraPermission();
+  const { requestCameraPermissions, checkCameraPermissions } = usePermission();
 
   const requestPermissions = async () => {
+    const isGranted = await checkCameraPermissions();
+
+    if (isGranted) return;
+
     const status = await requestCameraPermissions();
 
     switch (status) {

@@ -7,9 +7,10 @@
   "license": "MIT",
   "scripts": {
     "android": "react-native run-android",
+    "android:release": "cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "test": "jest",
     "prepare": "husky install && patch-package"
   },

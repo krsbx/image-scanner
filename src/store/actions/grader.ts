@@ -26,7 +26,7 @@ export const resetGrader = () => (dispatch: AppDispatch) =>
   });
 
 export const gradeImages =
-  (payload: GraderInput | GraderInput[]) => async (dispatch: AppDispatch) => {
+  (payload: GraderInput | GraderInput[]) => (dispatch: AppDispatch) => {
     dispatch({
       type: GraderActionType.SET,
       payload: {
@@ -35,30 +35,36 @@ export const gradeImages =
       },
     });
 
-    try {
-      const results = await Promise.all(
-        _.map(Array.isArray(payload) ? payload : [payload], ({ image }) =>
-          gradeImage(image)
-        )
-      );
+    return new Promise<GraderOutput[]>(async (resolve) => {
+      try {
+        const results = await Promise.all(
+          _.map(Array.isArray(payload) ? payload : [payload], ({ image }) =>
+            gradeImage(image)
+          )
+        );
 
-      setTimeout(() => {
+        const output = results.map(([result, err]) => result!);
+
+        setTimeout(() => {
+          dispatch({
+            type: GraderActionType.SET,
+            payload: {
+              isOnGrading: false,
+              output,
+            },
+          });
+
+          resolve(output);
+        }, 2000);
+      } catch {
         dispatch({
           type: GraderActionType.SET,
           payload: {
             isOnGrading: false,
-            output: results.map(([result, err]) => result!),
           },
         });
-      }, 3000);
-    } catch {
-      dispatch({
-        type: GraderActionType.SET,
-        payload: {
-          isOnGrading: false,
-        },
-      });
-    }
+      }
+    });
   };
 
 // ---- PUSH ---- //

@@ -27,21 +27,22 @@ export const resetGrader = () => (dispatch: AppDispatch) =>
 
 export const gradeImages =
   (payload: GraderInput | GraderInput[]) => (dispatch: AppDispatch) => {
+    const input = Array.isArray(payload) ? payload : [payload];
+
     dispatch({
       type: GraderActionType.SET,
       payload: {
-        input: Array.isArray(payload) ? payload : [payload],
         isOnGrading: true,
+        input,
       },
     });
 
     return new Promise<GraderOutput[]>(async (resolve) => {
       try {
-        const results = await Promise.all(
-          _.map(Array.isArray(payload) ? payload : [payload], ({ image }) =>
-            gradeImage(image)
-          )
-        );
+        const results: Awaited<ReturnType<typeof gradeImage>>[] = [];
+
+        for (const [, { image }] of Object.entries(input))
+          results.push(await gradeImage(image));
 
         const output = results.map(([result, err]) => result!);
 

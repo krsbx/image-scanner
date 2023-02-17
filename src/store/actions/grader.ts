@@ -26,7 +26,7 @@ export const resetGrader = () => (dispatch: AppDispatch) =>
   });
 
 export const gradeImages =
-  (payload: GraderInput | GraderInput[]) => (dispatch: AppDispatch) => {
+  (payload: GraderInput | GraderInput[]) => async (dispatch: AppDispatch) => {
     const input = Array.isArray(payload) ? payload : [payload];
 
     dispatch({
@@ -34,38 +34,34 @@ export const gradeImages =
       payload: {
         isOnGrading: true,
         input,
+        output: [],
       },
     });
 
-    return new Promise<GraderOutput[]>(async (resolve) => {
-      try {
-        const results: Awaited<ReturnType<typeof gradeImage>>[] = [];
+    try {
+      const results: Awaited<ReturnType<typeof gradeImage>>[] = [];
 
-        for (const [, { image }] of Object.entries(input))
-          results.push(await gradeImage(image));
+      for (const [, { image }] of Object.entries(input))
+        results.push(await gradeImage(image));
 
-        const output = results.map(([result, err]) => result!);
+      const output = results.map(([result, err]) => result!);
 
-        setTimeout(() => {
-          dispatch({
-            type: GraderActionType.SET,
-            payload: {
-              isOnGrading: false,
-              output,
-            },
-          });
-
-          resolve(output);
-        }, 2000);
-      } catch {
-        dispatch({
-          type: GraderActionType.SET,
-          payload: {
-            isOnGrading: false,
-          },
-        });
-      }
-    });
+      dispatch({
+        type: GraderActionType.SET,
+        payload: {
+          isOnGrading: false,
+          output,
+        },
+      });
+    } catch {
+      dispatch({
+        type: GraderActionType.SET,
+        payload: {
+          isOnGrading: false,
+          output: [],
+        },
+      });
+    }
   };
 
 // ---- PUSH ---- //

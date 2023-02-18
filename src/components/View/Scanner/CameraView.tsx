@@ -15,6 +15,7 @@ import { getDevice } from '../../../store/selectors/device';
 import usePreviewSize from '../../../hooks/usePreviewSIze';
 import { overlayStyle } from '../../../styles';
 import CameraOverlay from '../../Overlay/CameraOverlay';
+import { optimizeImage } from '../../../utils/common';
 
 const CameraView: React.FC<Props> = ({
   device,
@@ -58,16 +59,20 @@ const CameraView: React.FC<Props> = ({
     });
   };
 
-  const onPictureProcessed: ScannerComponentProps['onPictureProcessed'] = (
-    event
-  ) => {
-    setScanner({
-      image: event,
-      isTakingPicture: false,
-      isProcessingImage: false,
-      isOnScannerView: cameraIsOn || false,
-    });
-  };
+  const onPictureProcessed: ScannerComponentProps['onPictureProcessed'] =
+    async (event) => {
+      const initialImage = await optimizeImage(event.initialImage);
+
+      setScanner({
+        image: {
+          ...event,
+          initialImage,
+        },
+        isTakingPicture: false,
+        isProcessingImage: false,
+        isOnScannerView: cameraIsOn || false,
+      });
+    };
 
   const onTorchChanged: ScannerComponentProps['onTorchChanged'] = ({
     enabled,

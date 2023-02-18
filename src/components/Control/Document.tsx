@@ -3,13 +3,13 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DocumentPicker from 'react-native-document-picker';
-import PdfThumbnail from 'react-native-pdf-thumbnail';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect, ConnectedProps } from 'react-redux';
 import { setScanner as _setScanner } from '../../store/actions/scanner';
 import { controlStyle } from '../../styles';
 import { MainNavigationScreenNavigation } from '../../types/Navigation';
 import { DEFAULT_RECTANGLE, SCREEN_NAME } from '../../utils/constant';
+import { generateThumbnail, optimizeImage } from '../../utils/common';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
   const navigation =
@@ -33,11 +33,13 @@ const Document: React.FC<Props> = ({ setScanner }) => {
       switch (ext) {
         case 'jpeg':
         case 'jpg': {
-          Image.getSize(filePath, (width, height) => {
+          Image.getSize(filePath, async (width, height) => {
+            const initialImage = await optimizeImage(filePath, 60);
+
             setScanner({
               detectedRectangle: DEFAULT_RECTANGLE(width, height),
               image: {
-                initialImage: filePath,
+                initialImage,
                 croppedImage: '',
               },
             });
@@ -49,15 +51,13 @@ const Document: React.FC<Props> = ({ setScanner }) => {
         }
 
         case 'pdf': {
-          const { height, uri, width } = await PdfThumbnail.generate(
-            filePath,
-            0,
-            90
-          );
+          const { height, uri, width } = await generateThumbnail(filePath);
+
+          const initialImage = await optimizeImage(uri, 60);
 
           setScanner({
             image: {
-              initialImage: uri,
+              initialImage,
               croppedImage: '',
             },
             detectedRectangle: DEFAULT_RECTANGLE(width, height),

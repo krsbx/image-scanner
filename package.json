@@ -30,6 +30,7 @@
     "react-native-gesture-handler": "^2.9.0",
     "react-native-pdf-thumbnail": "^1.2.1",
     "react-native-perspective-image-cropper": "https://github.com/rosenexpend/react-native-perspective-image-cropper",
+    "react-native-photo-manipulator": "^1.2.7",
     "react-native-rectangle-scanner": "^1.0.10",
     "react-native-safe-area-context": "^4.5.0",
     "react-native-screens": "^3.19.0",

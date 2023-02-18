@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "android": "react-native run-android",
+    "android:clean": "cd android && ./gradlew clean",
+    "android:debug": "cd android && ./gradlew assembleDebug",
     "android:release": "cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
     "lint": "eslint .",
@@ -52,7 +54,6 @@
     "@types/react": "^18.0.24",
     "@types/react-native-vector-icons": "^6.4.13",
     "@types/react-test-renderer": "^18.0.0",
-    "@types/seamless-immutable": "^7.1.16",
     "babel-jest": "^29.2.1",
     "eslint": "^8.19.0",
     "fs-extra": "^11.1.0",

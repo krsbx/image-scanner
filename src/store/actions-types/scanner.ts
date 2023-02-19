@@ -19,6 +19,8 @@ export type ScannerReducer = {
   detectedRectangles: DetectedRectangle[];
   croppedImages: string[];
   selectedImage: number;
+
+  imageProcessingTimeout: NodeJS.Timer | undefined;
 };
 
 export enum ScannerActionType {

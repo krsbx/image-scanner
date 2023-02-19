@@ -27,20 +27,20 @@ export const DIMENSSIONS = {
 
 export const DEFAULT_RECTANGLE = (width: number, height: number) => ({
   bottomLeft: {
-    x: Math.floor(width / 4) || 0,
-    y: Math.floor(height / 4) || 0,
+    x: width * 0.25 || 0,
+    y: height * 0.25 || 0,
   },
   bottomRight: {
-    x: Math.floor(width / 2) || 0,
-    y: Math.floor(height / 4) || 0,
+    x: width * 0.75 || 0,
+    y: height * 0.25 || 0,
   },
   topLeft: {
-    x: Math.floor(width / 4) || 0,
-    y: Math.floor(height / 2) || 0,
+    x: width * 0.25 || 0,
+    y: height * 0.75 || 0,
   },
   topRight: {
-    x: Math.floor(width / 2) || 0,
-    y: Math.floor(height / 2) || 0,
+    x: width * 0.75 || 0,
+    y: height * 0.75 || 0,
   },
   dimensions: {
     height,

@@ -17,6 +17,7 @@ import {
 } from '../actions-types/scanner';
 
 const initialState: ScannerReducer = {
+  imageProcessingTimeout: undefined,
   selectedImage: -1,
 
   detectedRectangle: undefined,

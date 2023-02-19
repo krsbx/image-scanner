@@ -44,7 +44,9 @@ const Document: React.FC<Props> = ({ setScanner }) => {
               },
             });
 
-            navigation.replace(SCREEN_NAME.CROP, {});
+            navigation.replace(SCREEN_NAME.CROP, {
+              from: SCREEN_NAME.HOME,
+            });
           });
 
           break;
@@ -63,7 +65,9 @@ const Document: React.FC<Props> = ({ setScanner }) => {
             detectedRectangle: DEFAULT_RECTANGLE(width, height),
           });
 
-          navigation.replace(SCREEN_NAME.CROP, {});
+          navigation.replace(SCREEN_NAME.CROP, {
+            from: SCREEN_NAME.HOME,
+          });
           break;
         }
 

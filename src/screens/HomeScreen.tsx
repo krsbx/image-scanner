@@ -19,7 +19,6 @@ import ScannerView from '../components/View/Scanner/ScannerView';
 import { MainNavigationScreenNavigation } from '../types/Navigation';
 import { globalStyle } from '../styles';
 import useCameraInitializer from '../hooks/useCameraInitializer';
-import useCameraDisabler from '../hooks/useCameraDisabler';
 
 const HomeScreen: React.FC<Props> = ({ scanner, setScanner, cameraIsOn }) => {
   const { didLoadInitialLayout, isTakingPicture, isProcessingImage, image } =
@@ -31,7 +30,6 @@ const HomeScreen: React.FC<Props> = ({ scanner, setScanner, cameraIsOn }) => {
 
   const cameraRef = createRef<RectScannerView>();
 
-  useCameraDisabler();
   useCameraInitializer(cameraIsOn);
 
   const capture = () => {

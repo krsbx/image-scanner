@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { AppState } from '..';
-import { DEFAULT_RECTANGLE, DIMENSSIONS } from '../../utils/constant';
+import { getDefaultRectangle } from '../../utils/common';
+import { DIMENSSIONS } from '../../utils/constant';
 
 export const getScanner = (state: AppState) => state.scanner;
 
@@ -45,7 +46,10 @@ export const getTotalImage = (state: AppState) =>
 export const getCropState = (state: AppState) => {
   const { image, detectedRectangle } = getScanner(state);
 
-  const defaultRect = DEFAULT_RECTANGLE(DIMENSSIONS.WIDTH, DIMENSSIONS.HEIGHT);
+  const defaultRect = getDefaultRectangle(
+    DIMENSSIONS.WIDTH,
+    DIMENSSIONS.HEIGHT
+  );
 
   return {
     image: {
@@ -53,13 +57,10 @@ export const getCropState = (state: AppState) => {
       initialImage: image?.initialImage ?? '',
     },
     detectedRectangle: {
-      bottomLeft:
-        detectedRectangle?.bottomLeft ?? _.cloneDeep(defaultRect.bottomLeft),
-      bottomRight:
-        detectedRectangle?.bottomRight ?? _.cloneDeep(defaultRect.bottomRight),
-      topLeft: detectedRectangle?.topLeft ?? _.cloneDeep(defaultRect.topLeft),
-      topRight:
-        detectedRectangle?.topRight ?? _.cloneDeep(defaultRect.topRight),
+      bottomLeft: detectedRectangle?.bottomLeft ?? defaultRect.bottomLeft,
+      bottomRight: detectedRectangle?.bottomRight ?? defaultRect.bottomRight,
+      topLeft: detectedRectangle?.topLeft ?? defaultRect.topLeft,
+      topRight: detectedRectangle?.topRight ?? defaultRect.topRight,
       dimensions: {
         height:
           detectedRectangle?.dimensions?.height ??

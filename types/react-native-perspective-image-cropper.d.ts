@@ -8,19 +8,31 @@ declare module 'react-native-perspective-image-cropper' {
     y: number;
   }
 
+  export interface Offset {
+    horizontal: number;
+    vertical: number;
+  }
+
   export interface CustomCropProps {
     overlayColor?: string;
     overlayOpacity?: number;
     overlayStrokeColor?: string;
     overlayStrokeWidth?: number;
 
+    borderColor?: string;
     handlerColor?: string;
-
+    handlerOuterColor?: string;
     handlerRoundSize?: number;
     handlerRoundOuterSize?: number;
 
-    topOffset?: number;
-    bottomOffset?: number;
+    topOffset?: {
+      left: Offset;
+      right: Offset;
+    };
+    bottomOffset?: {
+      left: Offset;
+      right: Offset;
+    };
 
     height: number;
     path?: string;

@@ -25,29 +25,6 @@ export const DIMENSSIONS = {
   },
 };
 
-export const DEFAULT_RECTANGLE = (width: number, height: number) => ({
-  bottomLeft: {
-    x: width * 0.25 || 0,
-    y: height * 0.25 || 0,
-  },
-  bottomRight: {
-    x: width * 0.75 || 0,
-    y: height * 0.25 || 0,
-  },
-  topLeft: {
-    x: width * 0.25 || 0,
-    y: height * 0.75 || 0,
-  },
-  topRight: {
-    x: width * 0.75 || 0,
-    y: height * 0.75 || 0,
-  },
-  dimensions: {
-    height,
-    width,
-  },
-});
-
 export const GRADER_OUTPUT = {
   A: 'A',
   AB: 'AB',

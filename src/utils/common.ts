@@ -26,3 +26,26 @@ export const optimizeImage = (filePath: string, quality = 60) =>
 
 export const generateThumbnail = (filePath: string, page = 0, quality = 60) =>
   PdfThumbnail.generate(filePath, page, quality);
+
+export const getDefaultRectangle = (width: number, height: number) => ({
+  bottomLeft: {
+    x: width * 0.25 || 0,
+    y: height * 0.75 || 0,
+  },
+  bottomRight: {
+    x: width * 0.75 || 0,
+    y: height * 0.75 || 0,
+  },
+  topLeft: {
+    x: width * 0.25 || 0,
+    y: height * 0.25 || 0,
+  },
+  topRight: {
+    x: width * 0.75 || 0,
+    y: height * 0.25 || 0,
+  },
+  dimensions: {
+    height,
+    width,
+  },
+});

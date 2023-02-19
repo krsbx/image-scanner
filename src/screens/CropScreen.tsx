@@ -144,13 +144,13 @@ const CropScreen: React.FC<Props> = ({
             height={height}
             width={width}
             overlayStrokeWidth={1}
-            overlayColor="rgba(18,190,210, 0.4)"
-            overlayStrokeColor="rgba(20,180,255, 1)"
-            handlerColor="rgba(20,150,160, 1)"
+            overlayColor="rgba(255,181,6, 0.2)"
+            overlayStrokeColor="rgb(255,181,6)"
+            handlerOuterColor="rgba(255,181,6, 0.3)"
+            handlerColor="rgb(255,218,124)"
+            borderColor={'rgba(255,181,6, 0.3)'}
             handlerRoundSize={15}
             handlerRoundOuterSize={0.5}
-            topOffset={10}
-            bottomOffset={10}
             ref={
               cropRef as unknown as React.RefObject<Component<CustomCropProps>>
             }

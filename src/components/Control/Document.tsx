@@ -8,8 +8,12 @@ import { connect, ConnectedProps } from 'react-redux';
 import { setScanner as _setScanner } from '../../store/actions/scanner';
 import { controlStyle } from '../../styles';
 import { MainNavigationScreenNavigation } from '../../types/Navigation';
-import { DEFAULT_RECTANGLE, SCREEN_NAME } from '../../utils/constant';
-import { generateThumbnail, optimizeImage } from '../../utils/common';
+import { SCREEN_NAME } from '../../utils/constant';
+import {
+  generateThumbnail,
+  getDefaultRectangle,
+  optimizeImage,
+} from '../../utils/common';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
   const navigation =
@@ -37,7 +41,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
             const initialImage = await optimizeImage(filePath, 60);
 
             setScanner({
-              detectedRectangle: DEFAULT_RECTANGLE(width, height),
+              detectedRectangle: getDefaultRectangle(width, height),
               image: {
                 initialImage,
                 croppedImage: '',
@@ -62,7 +66,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
               initialImage,
               croppedImage: '',
             },
-            detectedRectangle: DEFAULT_RECTANGLE(width, height),
+            detectedRectangle: getDefaultRectangle(width, height),
           });
 
           navigation.replace(SCREEN_NAME.CROP, {

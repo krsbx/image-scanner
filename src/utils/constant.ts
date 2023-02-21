@@ -30,9 +30,7 @@ export const GRADER_OUTPUT = {
   AB: 'AB',
   B: 'B',
   BC: 'BC',
-  C: 'C',
-  D: 'D',
-  E: 'A',
+  E: 'E',
 } as const;
 
 export const SCREEN_NAME = {

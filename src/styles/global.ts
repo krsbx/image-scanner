@@ -39,9 +39,6 @@ const styles = StyleSheet.create({
     width: '100%',
     resizeMode: 'contain',
   },
-  croppedImageRot: {
-    transform: [{ rotateZ: '180deg' }, { rotateY: '180deg' }],
-  },
 });
 
 export default styles;

@@ -30,12 +30,7 @@ const DocumentResult: React.FC<Props> = ({
       />
       <Image
         source={{ uri: `data:image/png;base64,${croppedImage}` }}
-        style={[
-          globalStyle.croppedImage,
-          dimensions.height < dimensions.width
-            ? globalStyle.croppedImageRot
-            : {},
-        ]}
+        style={[globalStyle.croppedImage]}
       />
       <View style={styles.resultContainer}>
         <Text style={[styles.gradeText]}>

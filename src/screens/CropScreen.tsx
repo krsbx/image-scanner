@@ -157,10 +157,7 @@ const CropScreen: React.FC<Props> = ({
           />
         ) : (
           <Image
-            style={[
-              globalStyle.croppedImage,
-              height < width ? globalStyle.croppedImageRot : {},
-            ]}
+            style={[globalStyle.croppedImage]}
             source={{ uri: `data:image/png;base64,${croppedImage}` }}
           />
         )}

@@ -38,10 +38,6 @@ const ScannedDocument: React.FC<Props> = ({
               {
                 height: 150,
               },
-              detectedRectangle?.dimensions?.height <
-              detectedRectangle?.dimensions?.width
-                ? globalStyle.croppedImageRot
-                : {},
             ]}
           />
         </View>

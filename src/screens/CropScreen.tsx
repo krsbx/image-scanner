@@ -130,7 +130,7 @@ const CropScreen: React.FC<Props> = ({
       );
 
       return () => subs.remove();
-    }, [croppedImage])
+    }, [croppedImage]) // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

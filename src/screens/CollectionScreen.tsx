@@ -81,7 +81,7 @@ const CollectionScreen: React.FC<Props> = ({
       );
 
       return () => subs.remove();
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

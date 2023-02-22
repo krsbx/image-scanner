@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 
 const useEffectOnce = (callback?: () => void) => {
   const isTriggered = useRef(false);
@@ -9,7 +9,7 @@ const useEffectOnce = (callback?: () => void) => {
     isTriggered.current = true;
 
     callback?.();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export default useEffectOnce;

@@ -17,6 +17,7 @@ const Gallery: React.FC<Props> = ({ totalImage, images, setScanner }) => {
   const onPress = () => {
     setScanner({
       isOnScannerView: false,
+      isFlashEnabled: false,
     });
 
     navigation.replace(SCREEN_NAME.COLLECTION);

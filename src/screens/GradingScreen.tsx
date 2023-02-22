@@ -53,7 +53,7 @@ const GradingScreen: React.FC<Props> = ({
       );
 
       return () => subs.remove();
-    }, [input, output, selectedImage])
+    }, [input, output, selectedImage]) // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

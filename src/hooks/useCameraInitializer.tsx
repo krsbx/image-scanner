@@ -30,7 +30,7 @@ const useCameraInitializer = (cameraIsOn: boolean | undefined = undefined) => {
         imageProcessingTimeout: undefined,
       })(dispatch);
     };
-  }, [didLoadInitialLayout, isMultiTasking]);
+  }, [didLoadInitialLayout, isMultiTasking]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!didLoadInitialLayout) return;
@@ -41,7 +41,7 @@ const useCameraInitializer = (cameraIsOn: boolean | undefined = undefined) => {
     if (cameraIsOn === true && !isOnScannerView) return turnOnCamera();
     if (cameraIsOn === false && isOnScannerView) return turnOffCamera(true);
     if (cameraIsOn === undefined) return turnOnCamera();
-  }, [didLoadInitialLayout]);
+  }, [didLoadInitialLayout]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export default useCameraInitializer;

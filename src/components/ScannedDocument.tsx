@@ -2,10 +2,9 @@ import React from 'react';
 import { Image, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DetectedRectangle } from 'react-native-rectangle-scanner';
-import { controlStyle, globalStyle } from '../styles';
+import { controlStyle } from '../styles';
 
 const ScannedDocument: React.FC<Props> = ({
-  detectedRectangle,
   croppedImage,
   withClose = true,
   onPressOnClose,

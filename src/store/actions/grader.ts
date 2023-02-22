@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { AppDispatch } from '..';
 import { gradeImage } from '../../utils/common';
 import {
@@ -44,7 +43,7 @@ export const gradeImages =
       for (const [, { image }] of Object.entries(input))
         results.push(await gradeImage(image));
 
-      const output = results.map(([result, err]) => result!);
+      const output = results.map(([result]) => result!);
 
       dispatch({
         type: GraderActionType.SET,

@@ -11,11 +11,8 @@ import { DIMENSSIONS } from '../../utils/constant';
 const DocumentResult: React.FC<Props> = ({
   imageResult,
   croppedImage,
-  detectedRectangle,
   onPressOutside,
 }) => {
-  const { dimensions } = detectedRectangle;
-
   return (
     <View style={[styles.overlay]}>
       <TouchableOpacity

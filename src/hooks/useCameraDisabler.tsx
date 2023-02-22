@@ -11,7 +11,7 @@ const useCameraDisabler = () => {
     setScanner({
       isOnScannerView: appState !== 'active',
     })(dispatch);
-  }, [appState]);
+  }, [appState]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export default useCameraDisabler;

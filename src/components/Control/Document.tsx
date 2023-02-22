@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +22,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
     try {
       setScanner({
         isOnScannerView: false,
+        isFlashEnabled: false,
       });
 
       const { fileCopyUri: filePath, name } = await DocumentPicker.pickSingle({

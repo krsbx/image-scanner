@@ -13,11 +13,7 @@ const PhoneLayout: React.FC<Props> = ({ capture }) => {
         style={[
           globalStyle.buttonBottomContainer,
           {
-            width: '100%',
-            left: 0,
-            bottom: 0,
-            paddingHorizontal: 25,
-            paddingBottom: 20,
+            paddingBottom: 5,
           },
         ]}
       >
@@ -29,7 +25,7 @@ const PhoneLayout: React.FC<Props> = ({ capture }) => {
               controlStyle.buttonActionGroup,
               {
                 justifyContent: 'flex-end',
-                marginBottom: 16,
+                marginBottom: 5,
               },
             ]}
           >

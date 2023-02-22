@@ -53,7 +53,7 @@ const CameraView: React.FC<Props> = ({
     });
   };
 
-  const onPictureTaken: ScannerComponentProps['onPictureTaken'] = (event) => {
+  const onPictureTaken: ScannerComponentProps['onPictureTaken'] = () => {
     setScanner({
       isTakingPicture: false,
     });
@@ -87,52 +87,54 @@ const CameraView: React.FC<Props> = ({
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        position: 'relative',
-        marginTop: previewSize.marginTop,
-        marginLeft: previewSize.marginLeft,
-        height: `${previewSize.height * 100}%`,
-        width: `${previewSize.width * 100}%`,
-      }}
-    >
-      <Scanner
-        enableTorch={scanner.isFlashEnabled}
-        ref={cameraRef}
-        capturedQuality={1}
-        onTorchChanged={onTorchChanged}
-        style={overlayStyle.scanner}
-        onDeviceSetup={onDeviceSetup}
-        onPictureProcessed={onPictureProcessed}
-        onPictureTaken={onPictureTaken}
-        onRectangleDetected={onRectangleDetected}
-        filterId={Filters.COLOR_FILTER.id}
-      />
-      {!scanner.isLoadingCamera && !scanner.isProcessingImage ? (
-        <RectangleOverlay
-          detectedRectangle={scanner.detectedRectangle}
-          backgroundColor="rgba(255,181,6, 0.2)"
-          borderColor="rgb(255,181,6)"
-          borderWidth={4}
-          detectedBackgroundColor="rgba(255,181,6, 0.3)"
-          detectedBorderWidth={6}
-          detectedBorderColor="rgb(255,218,124)"
-          onDetectedCapture={capture}
-          allowDetection
+    <React.Fragment>
+      <View
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+          position: 'relative',
+          marginTop: previewSize.marginTop,
+          marginLeft: previewSize.marginLeft,
+          height: `${previewSize.height * 100}%`,
+          width: `${previewSize.width * 100}%`,
+        }}
+      >
+        <Scanner
+          enableTorch={scanner.isFlashEnabled}
+          ref={cameraRef}
+          capturedQuality={1}
+          onTorchChanged={onTorchChanged}
+          style={overlayStyle.scanner}
+          onDeviceSetup={onDeviceSetup}
+          onPictureProcessed={onPictureProcessed}
+          onPictureTaken={onPictureTaken}
+          onRectangleDetected={onRectangleDetected}
+          filterId={Filters.COLOR_FILTER.id}
         />
-      ) : null}
-      <Animated.View
-        style={[
-          overlayStyle.container,
-          {
-            backgroundColor: 'white',
-            opacity: flashOpacity,
-          },
-        ]}
-      />
+        {!scanner.isLoadingCamera && !scanner.isProcessingImage ? (
+          <RectangleOverlay
+            detectedRectangle={scanner.detectedRectangle}
+            backgroundColor="rgba(255,181,6, 0.2)"
+            borderColor="rgb(255,181,6)"
+            borderWidth={4}
+            detectedBackgroundColor="rgba(255,181,6, 0.3)"
+            detectedBorderWidth={6}
+            detectedBorderColor="rgb(255,218,124)"
+            onDetectedCapture={capture}
+            allowDetection
+          />
+        ) : null}
+        <Animated.View
+          style={[
+            overlayStyle.container,
+            {
+              backgroundColor: 'white',
+              opacity: flashOpacity,
+            },
+          ]}
+        />
+      </View>
       <CameraOverlay capture={capture} />
-    </View>
+    </React.Fragment>
   );
 };
 

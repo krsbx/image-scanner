@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { AppState } from '..';
 import { getDefaultRectangle } from '../../utils/common';
 import { DIMENSSIONS } from '../../utils/constant';

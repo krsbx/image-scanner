@@ -1,6 +1,5 @@
 declare module 'react-native-perspective-image-cropper' {
   import { ComponentClass } from 'react';
-  import { View } from 'react-native';
   import { DetectedRectangle } from 'react-native-rectangle-scanner';
 
   export interface Coordinate {
@@ -12,6 +11,9 @@ declare module 'react-native-perspective-image-cropper' {
     horizontal: number;
     vertical: number;
   }
+
+  export type UpdateCoordinate = Omit<DetectedRectangle, 'dimensions'> &
+    DetectedRectangle['dimensions'];
 
   export interface CustomCropProps {
     overlayColor?: string;
@@ -38,11 +40,7 @@ declare module 'react-native-perspective-image-cropper' {
     path?: string;
     rectangleCoordinates?: DetectedRectangle;
     initialImage: string;
-    updateImage: (
-      path: string,
-      coordinates: Omit<DetectedRectangle, 'dimensions'> &
-        DetectedRectangle['dimensions']
-    ) => void;
+    updateImage: (path: string, coordinates: UpdateCoordinate) => void;
     width: number;
   }
 

@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import React, { createRef, useRef, useEffect, useCallback } from 'react';
+import React, { createRef, useEffect, useCallback } from 'react';
 import {
   LayoutChangeEvent,
   StatusBar,
@@ -78,10 +77,14 @@ const HomeScreen: React.FC<Props> = ({ scanner, setScanner, cameraIsOn }) => {
   useEffect(() => {
     if (!image) return;
 
+    setScanner({
+      isFlashEnabled: false,
+    });
+
     navigation.replace(SCREEN_NAME.CROP, {
       from: SCREEN_NAME.HOME,
     });
-  }, [image]);
+  }, [image]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useFocusEffect(
     useCallback(() => {

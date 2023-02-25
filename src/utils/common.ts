@@ -1,9 +1,10 @@
+import _ from 'lodash';
 import PdfThumbnail from 'react-native-pdf-thumbnail';
 import RNPhotoManipulator from 'react-native-photo-manipulator';
 import axios from '../store/axios';
 import { GraderOutput } from '../store/actions-types/grader';
 
-export const gradeImage = async (image: string) => {
+export const gradeImage = async (...image: string[]) => {
   try {
     const {
       data: { data },
@@ -11,11 +12,19 @@ export const gradeImage = async (image: string) => {
       code: number;
       status: string;
       data: GraderOutput[];
-    }>('/grades', {
-      image,
-    });
+    }>(
+      '/grades',
+      _.reduce(
+        image,
+        (prev, curr, key) => ({
+          ...prev,
+          [key]: curr,
+        }),
+        {} as Record<string, string>
+      )
+    );
 
-    return [data[0], null] as const;
+    return [data, null] as const;
   } catch (err) {
     return [null, err] as const;
   }

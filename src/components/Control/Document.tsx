@@ -22,7 +22,6 @@ const Document: React.FC<Props> = ({ setScanner }) => {
     try {
       setScanner({
         isOnScannerView: false,
-        isFlashEnabled: false,
       });
 
       const { fileCopyUri: filePath, name } = await DocumentPicker.pickSingle({
@@ -82,6 +81,7 @@ const Document: React.FC<Props> = ({ setScanner }) => {
     } catch {
       setScanner({
         isOnScannerView: true,
+        isFlashEnabled: false,
       });
     }
   };

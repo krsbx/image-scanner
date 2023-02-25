@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { AppDispatch } from '..';
 import { gradeImage } from '../../utils/common';
 import {
@@ -37,22 +38,11 @@ export const gradeImages =
       },
     });
 
-    try {
-      const results: Awaited<ReturnType<typeof gradeImage>>[] = [];
+    const [results, error] = await gradeImage(
+      ..._.map(input, ({ image }) => image)
+    );
 
-      for (const [, { image }] of Object.entries(input))
-        results.push(await gradeImage(image));
-
-      const output = results.map(([result]) => result!);
-
-      dispatch({
-        type: GraderActionType.SET,
-        payload: {
-          isOnGrading: false,
-          output,
-        },
-      });
-    } catch {
+    if (error || !results) {
       dispatch({
         type: GraderActionType.SET,
         payload: {
@@ -60,7 +50,17 @@ export const gradeImages =
           output: [],
         },
       });
+
+      return;
     }
+
+    dispatch({
+      type: GraderActionType.SET,
+      payload: {
+        isOnGrading: false,
+        output: results,
+      },
+    });
   };
 
 // ---- PUSH ---- //

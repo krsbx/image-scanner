@@ -6,6 +6,7 @@ import {
   View,
   BackHandler,
 } from 'react-native';
+import RNExitApp from 'react-native-exit-app';
 import { connect, ConnectedProps } from 'react-redux';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ScannerView as RectScannerView } from 'react-native-rectangle-scanner';
@@ -89,7 +90,7 @@ const HomeScreen: React.FC<Props> = ({ scanner, setScanner, cameraIsOn }) => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        if (!__DEV__) throw {};
+        RNExitApp.exitApp();
 
         return true;
       };

@@ -27,6 +27,7 @@
     "react-native": "0.71.3",
     "react-native-document-picker": "^8.1.3",
     "react-native-dotenv": "^3.4.7",
+    "react-native-exit-app": "^1.1.0",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-pdf-thumbnail": "^1.2.1",
     "react-native-perspective-image-cropper": "https://github.com/rosenexpend/react-native-perspective-image-cropper",

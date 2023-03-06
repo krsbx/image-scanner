@@ -105,7 +105,9 @@ const LaunchScreen: React.FC = () => {
 
     switch (status) {
       case 'granted': {
-        setTimeout(() => navigation.replace(SCREEN_NAME.HOME), 2000);
+        setTimeout(() => {
+          navigation.replace(SCREEN_NAME.HOME);
+        }, 2000);
         return;
       }
 

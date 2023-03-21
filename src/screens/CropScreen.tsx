@@ -78,6 +78,7 @@ const CropScreen: React.FC<Props> = ({
   const onPressBack = () => {
     setScanner({
       detectedRectangle: undefined,
+      selectedImage: -1,
       image: undefined,
     });
 
@@ -107,6 +108,7 @@ const CropScreen: React.FC<Props> = ({
 
     setScanner({
       detectedRectangle: undefined,
+      selectedImage: -1,
       image: undefined,
     });
 

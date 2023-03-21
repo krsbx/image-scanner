@@ -7,6 +7,7 @@ import CropScreen from '../screens/CropScreen';
 import CollectionScreen from '../screens/CollectionScreen';
 import GradingScreen from '../screens/GradingScreen';
 import { MainNavigationParam } from '../types/Navigation';
+import { SCREEN_NAME } from '../utils/constant';
 
 const Stack = createStackNavigator<MainNavigationParam>();
 
@@ -14,16 +15,19 @@ const MainNavigation: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <Stack.Navigator
-        initialRouteName="LaunchScreen"
+        initialRouteName={SCREEN_NAME.LAUNCH}
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="CropScreen" component={CropScreen} />
-        <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
-        <Stack.Screen name="GradingScreen" component={GradingScreen} />
+        <Stack.Screen name={SCREEN_NAME.LAUNCH} component={LaunchScreen} />
+        <Stack.Screen name={SCREEN_NAME.HOME} component={HomeScreen} />
+        <Stack.Screen name={SCREEN_NAME.CROP} component={CropScreen} />
+        <Stack.Screen
+          name={SCREEN_NAME.COLLECTION}
+          component={CollectionScreen}
+        />
+        <Stack.Screen name={SCREEN_NAME.GRADING} component={GradingScreen} />
       </Stack.Navigator>
     </SafeAreaView>
   );

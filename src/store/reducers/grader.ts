@@ -70,7 +70,7 @@ const reducer = (
     // ---- UPDATE ---- //
 
     case ActionType.UPDATE_INPUT: {
-      if (!state.input[actions.payload.index])
+      if (_.isEmpty(state.input[actions.payload.index]))
         return {
           ...state,
           input: [...state.input, actions.payload.data],
@@ -78,11 +78,14 @@ const reducer = (
 
       state.input[actions.payload.index] = actions.payload.data;
 
-      return state;
+      return {
+        ...state,
+        input: [...state.input],
+      };
     }
 
     case ActionType.UPDATE_OUTPUT: {
-      if (!state.output[actions.payload.index])
+      if (_.isEmpty(state.output[actions.payload.index]))
         return {
           ...state,
           output: [...state.output, actions.payload.data],
@@ -90,13 +93,16 @@ const reducer = (
 
       state.output[actions.payload.index] = actions.payload.data;
 
-      return state;
+      return {
+        ...state,
+        output: [...state.output],
+      };
     }
 
     // ---- DELETE ---- //
 
     case ActionType.DELETE_INPUT: {
-      if (!state.input[actions.payload]) return state;
+      if (_.isEmpty(state.input[actions.payload])) return state;
 
       if (state.input.length === 1)
         return {
@@ -113,15 +119,15 @@ const reducer = (
     }
 
     case ActionType.DELETE_OUTPUT: {
-      if (!state.output[actions.payload]) return state;
-
-      state.output.splice(actions.payload, 1);
+      if (_.isEmpty(state.output[actions.payload])) return state;
 
       if (state.output.length === 1)
         return {
           ...state,
           output: [],
         };
+
+      state.output.splice(actions.payload, 1);
 
       return {
         ...state,

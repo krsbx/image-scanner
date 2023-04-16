@@ -8,11 +8,8 @@ import { setScanner as _setScanner } from '../../store/actions/scanner';
 import { controlStyle } from '../../styles';
 import { MainNavigationScreenNavigation } from '../../types/Navigation';
 import { SCREEN_NAME } from '../../utils/constant';
-import {
-  generateThumbnail,
-  getDefaultRectangle,
-  optimizeImage,
-} from '../../utils/common';
+import { getDefaultRectangle } from '../../utils/common';
+import { generateThumbnail, optimizeImage } from '../../utils/image';
 
 const Document: React.FC<Props> = ({ setScanner }) => {
   const navigation =

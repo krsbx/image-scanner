@@ -62,11 +62,11 @@ describe('Image Scanner', () => {
   });
 
   it('Can grade image using api', async () => {
-    const [grade, err] = await gradeImage(
-      store.getState().grader.input[0].image
-    );
+    jest.setTimeout(50000);
 
-    expect(grade?.score).toBeDefined();
+    const [grade] = await gradeImage(store.getState().grader.input[0].image);
+
+    expect(grade?.[0]?.score).toBeDefined();
   });
 
   it('Can store grade result from api to store', async () => {
@@ -77,15 +77,13 @@ describe('Image Scanner', () => {
       },
     });
 
-    const [grade, err] = await gradeImage(
-      store.getState().grader.input[1].image
-    );
+    const [grade] = await gradeImage(store.getState().grader.input[1].image);
 
     if (!grade) return;
 
     dispatch({
       type: GraderActionType.PUSH_OUTPUT,
-      payload: grade,
+      payload: grade[0],
     });
 
     expect(store.getState().grader.output.length).toBe(1);

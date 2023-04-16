@@ -15,7 +15,7 @@ import { getDevice } from '../../../store/selectors/device';
 import usePreviewSize from '../../../hooks/usePreviewSIze';
 import { overlayStyle } from '../../../styles';
 import CameraOverlay from '../../Overlay/CameraOverlay';
-import { optimizeImage } from '../../../utils/common';
+import { optimizeImage } from '../../../utils/image';
 
 const CameraView: React.FC<Props> = ({
   device,
